@@ -121,7 +121,15 @@ pub fn vector2Divide(v1: Vector2, v2: Vector2) Vector2 {
 }
 
 pub fn vector2Normalize(v: Vector2) Vector2 {
-    return cdef.Vector2Normalize(v);
+    const length = @sqrt((v.x * v.x) + (v.y * v.y));
+
+    var result: Vector2 = .{ .x = 0, .y = 0 };
+    if (length > 0) {
+        const ilength: f32 = 1.0 / length;
+        result.x = v.x * ilength;
+        result.y = v.y * ilength;
+    }
+    return result;
 }
 
 pub fn vector2Transform(v: Vector2, mat: Matrix) Vector2 {

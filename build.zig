@@ -3,7 +3,6 @@
 const std = @import("std");
 const this = @This();
 const rl = @import("raylib");
-pub const emsdk = rl.emsdk;
 
 pub const Options = rl.Options;
 pub const OpenglVersion = rl.OpenglVersion;
@@ -570,55 +569,17 @@ pub fn build(b: *std.Build) !void {
             .optimize = optimize,
         });
 
-        if (target.query.os_tag == .emscripten) {
-            const wasm = b.addLibrary(.{
-                .name = ex.name,
-                .root_module = mod,
-            });
-            wasm.root_module.addImport("raylib", raylib);
-            wasm.root_module.addImport("raygui", raygui);
+        const exe = b.addExecutable(.{
+            .name = ex.name,
+            .root_module = mod,
+        });
+        exe.root_module.addImport("raylib", raylib);
+        exe.root_module.addImport("raygui", raygui);
 
-            const install_dir: std.Build.InstallDir = .{ .custom = "web" };
-            const emcc_flags = emsdk.emccDefaultFlags(b.allocator, .{
-                .optimize = optimize,
-                .asyncify = !std.mem.endsWith(u8, ex.name, "web"),
-            });
-            const emcc_settings = emsdk.emccDefaultSettings(b.allocator, .{
-                .optimize = optimize,
-            });
+        const run_cmd = b.addRunArtifact(exe);
+        const run_step = b.step(ex.name, ex.desc);
 
-            const emcc_step = emsdk.emccStep(b, raylib_artifact, wasm, .{
-                .optimize = optimize,
-                .flags = emcc_flags,
-                .settings = emcc_settings,
-                .shell_file_path = emsdk.shell(raylib_dep),
-                .install_dir = install_dir,
-                .embed_paths = &.{.{ .src_path = "resources/" }},
-            });
-
-            const emrun_step = emsdk.emrunStep(
-                b,
-                b.fmt("zig-out/web/{s}.html", .{wasm.name}),
-                &.{},
-            );
-            emrun_step.dependOn(emcc_step);
-
-            const run_option = b.step(ex.name, ex.desc);
-            run_option.dependOn(emrun_step);
-            examples_step.dependOn(emcc_step);
-        } else {
-            const exe = b.addExecutable(.{
-                .name = ex.name,
-                .root_module = mod,
-            });
-            exe.root_module.addImport("raylib", raylib);
-            exe.root_module.addImport("raygui", raygui);
-
-            const run_cmd = b.addRunArtifact(exe);
-            const run_step = b.step(ex.name, ex.desc);
-
-            run_step.dependOn(&run_cmd.step);
-            examples_step.dependOn(&exe.step);
-        }
+        run_step.dependOn(&run_cmd.step);
+        examples_step.dependOn(&exe.step);
     }
 }
