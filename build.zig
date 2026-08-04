@@ -601,7 +601,7 @@ pub fn build(b: *std.Build) !void {
             const html_filename = try std.fmt.allocPrint(b.allocator, "{s}.html", .{wasm.name});
             const emrun_step = emsdk.emrunStep(
                 b,
-                b.getInstallPath(install_dir, html_filename),
+                b.fmt("zig-out/web/{s}.html", .{wasm.name}),
                 &.{},
             );
             emrun_step.dependOn(emcc_step);
