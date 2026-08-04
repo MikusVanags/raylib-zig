@@ -78,8 +78,6 @@ pub fn build(b: *std.Build) !void {
     const raylib = this.getModule(b, target, optimize);
     const raygui = this.gui.getModule(b, target, optimize);
 
-    raylib.linkLibrary(raylib_artifact);
-
     const examples = [_]Program{
         .{
             .name = "raw_stream",
