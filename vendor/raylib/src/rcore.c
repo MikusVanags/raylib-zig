@@ -235,7 +235,7 @@
     #define MAX_MOUSE_BUTTONS              8        // Maximum number of mouse buttons supported
 #endif
 #ifndef MAX_GAMEPADS
-    #define MAX_GAMEPADS                   4        // Maximum number of gamepads supported
+    #define MAX_GAMEPADS                   16       // Maximum number of gamepads supported
 #endif
 #ifndef MAX_GAMEPAD_NAME_LENGTH
     #define MAX_GAMEPAD_NAME_LENGTH      128        // Maximum number of characters in a gamepad name (byte size)
