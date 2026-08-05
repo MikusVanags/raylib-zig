@@ -575,6 +575,7 @@ pub fn build(b: *std.Build) !void {
         });
         exe.root_module.addImport("raylib", raylib);
         exe.root_module.addImport("raygui", raygui);
+        exe.root_module.linkLibrary(raylib_artifact);
 
         const run_cmd = b.addRunArtifact(exe);
         const run_step = b.step(ex.name, ex.desc);
