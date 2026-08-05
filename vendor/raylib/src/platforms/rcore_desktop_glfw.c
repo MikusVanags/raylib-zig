@@ -1307,7 +1307,7 @@ void PollInputEvents(void)
     // NOTE: Doing it here in case of disconnection
     for (int i = 0; i < MAX_GAMEPADS; i++)
     {
-        if (glfwJoystickPresent(i)) CORE.Input.Gamepad.ready[i] = true;
+        if (glfwJoystickIsGamepad(i)) CORE.Input.Gamepad.ready[i] = true;
         else CORE.Input.Gamepad.ready[i] = false;
     }
 
@@ -1828,7 +1828,7 @@ int InitPlatform(void)
     {
         // WARNING: If glfwGetJoystickName() is longer than MAX_GAMEPAD_NAME_LENGTH,
         // only copying up to (MAX_GAMEPAD_NAME_LENGTH - 1)
-        if (glfwJoystickPresent(i))
+        if (glfwJoystickIsGamepad(i))
         {
           CORE.Input.Gamepad.ready[i] = true;
           CORE.Input.Gamepad.axisCount[i] = GLFW_GAMEPAD_AXIS_LAST + 1;
