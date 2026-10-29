@@ -1,14 +1,14 @@
 .{
     .name = .raylib_zig,
-    .version = "6.0.0",
+    .version = "6.2.0",
     .fingerprint = 0xc4cfa8c610114f28,
     .dependencies = .{
         .raylib = .{
             .path = "vendor/raylib",
         },
         .raygui = .{
-            .url = "git+https://github.com/raysan5/raygui#3b2855842ab578a034f827c38cf8f62c042fc983",
-            .hash = "N-V-__8AAHvybwBw1kyBGn0BW_s1RqIpycNjLf_XbE-fpLUF",
+            .url = "git+https://github.com/raysan5/raygui#1abccb3a5303d041dc14404b7dd874fa665dd4af",
+            .hash = "N-V-__8AAHfAmAAiGh5pd2tF_LRtm1Wc_NbGUXbkBZ1riYkj",
         },
     },
     .minimum_zig_version = "0.17.0",
